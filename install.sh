@@ -35,14 +35,18 @@ y1="$kit/integration/with-rotation-y1.sh"
 mkdir -p "$kit/integration/.kept"
 wrap() { if [ -x "$y1" ]; then echo "$y1 -- $1"; else echo "$1"; fi; }
 
-# Old (2026-10-19) desktop symlinks pointed into the nested kit layout.
+# Old (2026-10-19) desktop symlinks pointed into the nested kit layout and
+# now dangle; drop them so the new launchers can be written.
 for f in "$HOME/Desktop"/*.desktop "$apps"/*.desktop; do
-  [ -L "$f" ] && case "$(readlink -f -- "$f")" in
-    *legion-go2-rotation-tools.old-*|*legion-go2-rotation-tools/aion2-*|*legion-go2-rotation-tools/everquest-*) rm -f -- "$f"; echo "removed stale launcher $f";;
+  [ -L "$f" ] || continue
+  target=$(readlink -- "$f" || true)
+  case "$target" in
+    *legion-go2-rotation-tools*) rm -f -- "$f"; echo "removed stale launcher $f";;
   esac
 done
 mk() { # name, exec, comment
   local file="$apps/$4"
+  rm -f -- "$file" "$HOME/Desktop/$4"
   cat > "$file" <<D
 [Desktop Entry]
 Type=Application
