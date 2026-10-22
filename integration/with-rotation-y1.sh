@@ -2,11 +2,9 @@
 set -euo pipefail
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-profile="$script_dir/rotation-y1.json"
 service=org.shadowblip.InputPlumber
 object=/org/shadowblip/InputPlumber/CompositeDevice0
 interface=org.shadowblip.Input.CompositeDevice
-expected_name="Rotation Tools Y1 Toggle"
 
 if [[ ${1:-} == -- ]]; then
   shift
@@ -15,6 +13,17 @@ if [[ $# -eq 0 ]]; then
   printf '%s\n' "Usage: $0 -- command [args...]" >&2
   exit 2
 fi
+
+# Which key Y1 becomes: F7 by default; F12 for the AION 2 tools because AION
+# uses F1-F8 as consumable quickslots (F7 is a scroll). Y1_PROFILE overrides.
+if [[ -n ${Y1_PROFILE:-} ]]; then
+  profile=$Y1_PROFILE
+elif [[ "$*" == *aion2* ]]; then
+  profile="$script_dir/rotation-y1-f12.json"
+else
+  profile="$script_dir/rotation-y1.json"
+fi
+expected_name=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1]))["name"])' "$profile")
 
 runtime_dir=${XDG_RUNTIME_DIR:-/tmp}
 exec 9>"$runtime_dir/rotation-y1-profile-${UID}.lock"

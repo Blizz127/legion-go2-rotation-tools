@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "kind": "DeviceProfile",
+  "name": "Rotation Tools Y1 Toggle (F12)",
+  "description": "Preserve the Legion Go 2 defaults and map Y1 to F12 for the AION 2 tools, whose F1-F8 are the game's consumable quickslots.",
+  "mapping": [
+    {
+      "name": "LeftTop",
+      "source_event": {
+        "gamepad": {
+          "button": "LeftTop"
+        }
+      },
+      "target_events": [
+        {
+          "gamepad": {
+            "button": "Guide"
+          }
+        },
+        {
+          "gamepad": {
+            "button": "North"
+          }
+        }
+      ]
+    },
+    {
+      "name": "RightTop",
+      "source_event": {
+        "gamepad": {
+          "button": "RightTop"
+        }
+      },
+      "target_events": [
+        {
+          "gamepad": {
+            "button": "Guide"
+          }
+        },
+        {
+          "gamepad": {
+            "button": "East"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Keyboard",
+      "source_event": {
+        "gamepad": {
+          "button": "Keyboard"
+        }
+      },
+      "target_events": [
+        {
+          "gamepad": {
+            "button": "Guide"
+          }
+        },
+        {
+          "gamepad": {
+            "button": "North"
+          }
+        }
+      ]
+    },
+    {
+      "name": "QuickAccess2",
+      "source_event": {
+        "gamepad": {
+          "button": "QuickAccess2"
+        }
+      },
+      "target_events": [
+        {
+          "gamepad": {
+            "button": "Guide"
+          }
+        },
+        {
+          "gamepad": {
+            "button": "East"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Y1 Rotation Toggle",
+      "source_event": {
+        "gamepad": {
+          "button": "LeftPaddle1"
+        }
+      },
+      "target_events": [
+        {
+          "keyboard": "KeyF12"
+        }
+      ]
+    },
+    {
+      "name": "Touchpad:CenterPad:Motion",
+      "source_event": {
+        "touchpad": {
+          "name": "CenterPad",
+          "touch": {
+            "motion": {}
+          }
+        }
+      },
+      "target_events": [
+        {
+          "touchpad": {
+            "name": "RightPad",
+            "touch": {
+              "motion": {}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,10 @@ Y1 wiring and Steam shortcuts there.
   from the 2026-10-19 deployment: loads `integration/rotation-y1.json` into
   InputPlumber (Legion Go 2 `LeftPaddle1` = Y1 -> keyboard F7, other defaults
   preserved), keeps it loaded while the helper runs, restores the previous
-  profile on exit, and refuses to run two Y1 helpers at once.
+  profile on exit, and refuses to run two Y1 helpers at once. For commands
+  whose path contains `aion2` it loads `rotation-y1-f12.json` instead (Y1 ->
+  F12), because AION 2 uses F1-F8 as consumable quickslots and F7 holds a
+  scroll; `Y1_PROFILE=<file>` overrides the choice.
 - The 2026-10-19 nested layout on the Legion is moved aside to
   `legion-go2-rotation-tools.old-20261019`, not deleted.
 

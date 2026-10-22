@@ -23,7 +23,7 @@ from pathlib import Path
 p = Path(sys.argv[1])
 data = json.loads(p.read_text()) if p.exists() else {}
 data.setdefault("combat_on", "KEY_F8"); data.setdefault("combat_off", "KEY_F9")
-data["combat_toggle"] = "KEY_F7"
+data["combat_toggle"] = "KEY_F12"  # Y1 -> F12 for AION (F7 is a scroll slot)
 p.write_text(json.dumps(data, indent=2) + "\n")
 print("controls.json:", data)
 PY
@@ -63,13 +63,13 @@ D
   echo "launcher: $1"
 }
 mk "AION 2 Cleric Rotation (Y1)" "$(wrap "$P/aion2-cleric-macro/launch-aion2-cleric.sh")" \
-   "Blizz Cleric solo assist; Y1 toggles combat, F8 on, F9 off" aion2-cleric-rotation-y1.desktop
+   "Blizz Cleric solo assist; Y1 (as F12) toggles combat, F8 on, F9 off" aion2-cleric-rotation-y1.desktop
 mk "EQ Legends Solo Assist (Y1)" "$(wrap "$P/everquest-legends-rotation/launch.sh")" \
    "Paladin/Cleric 1-50; Y1 as F7, F8 on, F9 off, F10 heal" eql-solo-assist-y1.desktop
 mk "GW2 1-Button Rotation (Y1)" "$(wrap "$P/gw2-1button/launch-gw2-gui.sh --key F7")" \
    "Guild Wars 2 one-button rotation; Y1 starts/stops" gw2-1button-gui-y1.desktop
 mk "AION 2 Crafting Assistant (Y1)" "$(wrap "$P/aion2-crafting-assistant/launch-aion2-crafting.sh")" \
-   "Bounded repeat-craft helper; F8 start, Y1/F7 toggle, F9 stop" aion2-crafting-assistant-y1.desktop
+   "Bounded repeat-craft helper; F8 start, Y1 (as F12) toggles, F9 stop" aion2-crafting-assistant-y1.desktop
 mk "GW Reforged 1-Button Rotation (Y1)" "$(wrap "$P/gw2-1button/launch-gw1-gui.sh --key F7")" \
    "Guild Wars: Reforged one-button rotation; Y1 starts/stops" gw1-1button-gui-y1.desktop
 update-desktop-database "$apps" 2>/dev/null || true
