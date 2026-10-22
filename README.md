@@ -13,10 +13,13 @@ Y1 wiring and Steam shortcuts there.
   windows at trigger `F7`, and adds non-Steam shortcuts.
 - `steam_shortcuts.py` — dependency-free binary VDF reader/writer that adds or
   updates non-Steam shortcuts by name and backs up the file first.
-- `y1-wrapper.sh` — loads the InputPlumber profile that presents the Legion's
-  Y1 button as keyboard F7 while a helper runs, restoring the previous profile
-  on exit. The verified profile from the 2026-10-19 deployment lives on the
-  Legion; `deploy.sh` keeps that copy if the kit's one is missing.
+- `integration/with-rotation-y1.sh -- <command>` — the Y1 wrapper recovered
+  from the 2026-10-19 deployment: loads `integration/rotation-y1.json` into
+  InputPlumber (Legion Go 2 `LeftPaddle1` = Y1 -> keyboard F7, other defaults
+  preserved), keeps it loaded while the helper runs, restores the previous
+  profile on exit, and refuses to run two Y1 helpers at once.
+- The 2026-10-19 nested layout on the Legion is moved aside to
+  `legion-go2-rotation-tools.old-20261019`, not deleted.
 
 Game Mode note: the helpers read the game window through X11 screenshots, so
 they must run in Desktop Mode (launch them from the Steam library or the

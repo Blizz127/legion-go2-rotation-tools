@@ -31,8 +31,16 @@ PY
 # 3. Launchers. The Y1 wrapper (InputPlumber profile that maps Y1 -> F7) is
 #    used when present; otherwise the plain launcher runs and F7/F8/F9 work
 #    from a keyboard.
-y1="$kit/y1-wrapper.sh"
-wrap() { if [ -x "$y1" ]; then echo "$y1 $1"; else echo "$1"; fi; }
+y1="$kit/integration/with-rotation-y1.sh"
+mkdir -p "$kit/integration/.kept"
+wrap() { if [ -x "$y1" ]; then echo "$y1 -- $1"; else echo "$1"; fi; }
+
+# Old (2026-10-19) desktop symlinks pointed into the nested kit layout.
+for f in "$HOME/Desktop"/*.desktop "$apps"/*.desktop; do
+  [ -L "$f" ] && case "$(readlink -f -- "$f")" in
+    *legion-go2-rotation-tools.old-*|*legion-go2-rotation-tools/aion2-*|*legion-go2-rotation-tools/everquest-*) rm -f -- "$f"; echo "removed stale launcher $f";;
+  esac
+done
 mk() { # name, exec, comment
   local file="$apps/$4"
   cat > "$file" <<D
@@ -56,6 +64,8 @@ mk "EQ Legends Solo Assist (Y1)" "$(wrap "$P/everquest-legends-rotation/launch.s
    "Paladin/Cleric 1-50; Y1 as F7, F8 on, F9 off, F10 heal" eql-solo-assist-y1.desktop
 mk "GW2 1-Button Rotation (Y1)" "$(wrap "$P/gw2-1button/launch-gw2-gui.sh --key F7")" \
    "Guild Wars 2 one-button rotation; Y1 starts/stops" gw2-1button-gui-y1.desktop
+mk "AION 2 Crafting Assistant (Y1)" "$(wrap "$P/aion2-crafting-assistant/launch-aion2-crafting.sh")" \
+   "Bounded repeat-craft helper; F8 start, Y1/F7 toggle, F9 stop" aion2-crafting-assistant-y1.desktop
 mk "GW Reforged 1-Button Rotation (Y1)" "$(wrap "$P/gw2-1button/launch-gw1-gui.sh --key F7")" \
    "Guild Wars: Reforged one-button rotation; Y1 starts/stops" gw1-1button-gui-y1.desktop
 update-desktop-database "$apps" 2>/dev/null || true
@@ -66,6 +76,7 @@ add_shortcuts() {
   python3 "$s" add --name "AION 2 Cleric Rotation (Y1)" --exe "$(wrap "$P/aion2-cleric-macro/launch-aion2-cleric.sh")" --dir "$P/aion2-cleric-macro" --tag Rotation
   python3 "$s" add --name "EQ Legends Solo Assist (Y1)" --exe "$(wrap "$P/everquest-legends-rotation/launch.sh")" --dir "$P/everquest-legends-rotation" --tag Rotation
   python3 "$s" add --name "GW2 1-Button Rotation (Y1)" --exe "$(wrap "$P/gw2-1button/launch-gw2-gui.sh --key F7")" --dir "$P/gw2-1button" --tag Rotation
+  python3 "$s" add --name "AION 2 Crafting Assistant (Y1)" --exe "$(wrap "$P/aion2-crafting-assistant/launch-aion2-crafting.sh")" --dir "$P/aion2-crafting-assistant" --tag Rotation
   python3 "$s" add --name "GW Reforged 1-Button Rotation (Y1)" --exe "$(wrap "$P/gw2-1button/launch-gw1-gui.sh --key F7")" --dir "$P/gw2-1button" --tag Rotation
 }
 if pgrep -f 'steam.sh|steamwebhelper' >/dev/null; then
