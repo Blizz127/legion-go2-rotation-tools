@@ -28,3 +28,12 @@ Game Mode note: the helpers read the game window through X11 screenshots, so
 they must run in Desktop Mode (launch them from the Steam library or the
 desktop there). In Game Mode each app is isolated by gamescope and the helper
 cannot see the game.
+
+## Starting a helper from SSH
+
+The Legion's logind has `KillUserProcesses=true`, so a helper started from an
+SSH shell is killed when that shell closes. Use `remote-launch.sh <name>` on
+the Legion (names: `aion2`, `aion2-craft`, `eq`, `gw2`, `gw1`); it starts the
+same (Y1) launcher as a transient `systemd --user` service with the desktop
+session's environment, logging to `~/.local/state/rotation-<name>.log`.
+`remote-launch.sh stop <name>` ends it (and the Y1 profile is restored).
